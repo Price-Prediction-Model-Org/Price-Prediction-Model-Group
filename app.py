@@ -15,6 +15,7 @@ from models import create_classes
 import datetime
 import tensorflow as tf
 import pickle
+from sklearn.preprocessing import MinMaxScaler
 
 
 
@@ -236,6 +237,8 @@ def get_predictions():
     model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/Trained_model_2_daily_BTC_4L_50N_0p1D_trainUpTo2021.h5', compile = False)
 
     scaler = pickle.load(open('scaler.pkl', 'rb'))
+    assert isinstance(scaler, MinMaxScaler)
+    scaler.clip = False  # add this line
     
     model_preds_dict = {}
     
