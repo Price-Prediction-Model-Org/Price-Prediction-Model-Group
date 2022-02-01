@@ -92,7 +92,7 @@ def index():
 
     # load df into db
     # Newdf_daily.to_sql(name='crypto_daily_table', con=engine, if_exists='append', index=False) 
-    Newdf_daily.to_sql("crypto_price", con = engine, if_exists='replace', index=False)
+    Newdf_daily.to_sql("crypto_price", con = engine, if_exists='replace')
 
     return render_template("index.html")
  
