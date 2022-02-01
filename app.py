@@ -70,7 +70,7 @@ def index():
         # add to db
         Newdf_daily.to_sql("crypto_price", con = engine, if_exists='replace', index=False)
 
-    oldest_timestamp_in_db = db.session.query(CryptoCurr.time).limit(1).all()[0]
+    oldest_timestamp_in_db = db.session.query(CryptoCurr.time).limit(1).all()[0][0]
     current_time = int(time.time())
 
     while current_time > oldest_timestamp_in_db:
