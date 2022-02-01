@@ -13,6 +13,8 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from models import create_classes
 import datetime
+import tensorflow as tf
+import pickle
 
 
 
@@ -143,7 +145,6 @@ def index():
     return render_template("index.html")
  
 
-
 @app.route("/first_five")
 def firstfive():
 
@@ -161,6 +162,102 @@ def firstfive():
         dict[i[0]] = float(i[1])
 
     return jsonify(dict)
+
+
+@app.route("/hist_data")
+def hist_data():
+    """Route to gather and return historical data for all crypto currencies
+
+    Returns:
+        hist_data_json [json]: json object containing historical data
+    """
+    
+    
+    hist_data_dict = {}
+    
+    hist_data_json = jsonify(hist_data_dict)
+
+    return hist_data_json
+
+
+@app.route("/model_predictions")
+def get_predictions():
+    
+    
+    model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/Trained_model_2_daily_BTC_4L_50N_0p1D_trainUpTo2021.h5', compile = False)
+
+    scaler = pickle.load(open('scaler.pkl', 'rb'))
+    
+    model_preds_dict = {}
+    
+    coins = ['BTC']
+    
+    for coin in coins:
+        
+        past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
+        
+        model_preds_dict[coin] = past_year_dict
+
+    model_preds_json = jsonify(model_preds_dict)
+
+    return model_preds_json
+
+# Function to make predictions for the past year in one day increments
+
+def predict_past_year(db, db_table, coin, model, scaler):
+    """Function to make predictions for the past year in one day increments for a given coin and model
+
+    Args:
+        db (object): sqlalchemy database object
+        db_table (object): database table to pull data from
+        coin (string): [coin that is going to be predicted]
+        model ([loaded LSTM model]): [trained  model loaded in from directory]
+        scaler (pickle file): saved MinMaxScaler
+
+    Returns:
+        past_year_dict [dict]: [dictionary containing dates, predictions, real prices]
+    """
+    
+    look_back = 60
+    one_year_ago = datetime.date.today() - datetime.timedelta(days=(365 + look_back))
+    
+    results = db.session.query(db_table.timestamp_date, db_table.close).filter(db_table.coin == coin).filter(db_table.timestamp_date >= one_year_ago).order_by(db_table.timestamp_date).all()
+    
+    dates = [str(x[0]) for x in results]
+    close_prices = [float(x[1]) for x in results]
+
+    inputs = np.array(close_prices).reshape(-1,1)
+
+    inputs_transformed = scaler.transform(inputs)
+
+    X_test = []
+    look_back = 60
+
+    for i in range(look_back, len(inputs_transformed)):
+        
+        X_test.append(inputs_transformed[i-60:i, 0])
+
+    X_test = np.array(X_test)
+    X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
+    
+    
+    predicted_stock_price = model.predict(X_test)
+    predicted_stock_price = scaler.inverse_transform(predicted_stock_price)
+    
+    
+    past_year_dict = {
+        'dates': dates[60:],
+        'real_prices': close_prices[60:],
+        'predictions': [float(x) for x in list(predicted_stock_price[:,0])]
+    }
+    
+    return past_year_dict
+
+
+
+
+
+
 
 
 
