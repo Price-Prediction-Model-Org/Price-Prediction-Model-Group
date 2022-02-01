@@ -51,6 +51,55 @@ CryptoCurr = create_classes(db)
 engine = create_engine(DATABASE_URL, echo = False)
 
 
+def predict_past_year(db, db_table, coin, model, scaler):
+    """Function to make predictions for the past year in one day increments for a given coin and model
+
+    Args:
+        db (object): sqlalchemy database object
+        db_table (object): database table to pull data from
+        coin (string): [coin that is going to be predicted]
+        model ([loaded LSTM model]): [trained  model loaded in from directory]
+        scaler (pickle file): saved MinMaxScaler
+
+    Returns:
+        past_year_dict [dict]: [dictionary containing dates, predictions, real prices]
+    """
+    
+    look_back = 60
+    one_year_ago = datetime.date.today() - datetime.timedelta(days=(365 + look_back))
+    
+    results = db.session.query(db_table.timestamp_date, db_table.close).filter(db_table.coin == coin).filter(db_table.timestamp_date >= one_year_ago).order_by(db_table.timestamp_date).all()
+    
+    dates = [str(x[0]) for x in results]
+    close_prices = [float(x[1]) for x in results]
+
+    inputs = np.array(close_prices).reshape(-1,1)
+
+    inputs_transformed = scaler.transform(inputs)
+
+    X_test = []
+    look_back = 60
+
+    for i in range(look_back, len(inputs_transformed)):
+        
+        X_test.append(inputs_transformed[i-60:i, 0])
+
+    X_test = np.array(X_test)
+    X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
+    
+    
+    predicted_stock_price = model.predict(X_test)
+    predicted_stock_price = scaler.inverse_transform(predicted_stock_price)
+    
+    
+    past_year_dict = {
+        'dates': dates[60:],
+        'real_prices': close_prices[60:],
+        'predictions': [float(x) for x in list(predicted_stock_price[:,0])]
+    }
+    
+    return past_year_dict
+
 #################################################
 # Flask Routes
 #################################################
@@ -204,54 +253,7 @@ def get_predictions():
 
 # Function to make predictions for the past year in one day increments
 
-def predict_past_year(db, db_table, coin, model, scaler):
-    """Function to make predictions for the past year in one day increments for a given coin and model
 
-    Args:
-        db (object): sqlalchemy database object
-        db_table (object): database table to pull data from
-        coin (string): [coin that is going to be predicted]
-        model ([loaded LSTM model]): [trained  model loaded in from directory]
-        scaler (pickle file): saved MinMaxScaler
-
-    Returns:
-        past_year_dict [dict]: [dictionary containing dates, predictions, real prices]
-    """
-    
-    look_back = 60
-    one_year_ago = datetime.date.today() - datetime.timedelta(days=(365 + look_back))
-    
-    results = db.session.query(db_table.timestamp_date, db_table.close).filter(db_table.coin == coin).filter(db_table.timestamp_date >= one_year_ago).order_by(db_table.timestamp_date).all()
-    
-    dates = [str(x[0]) for x in results]
-    close_prices = [float(x[1]) for x in results]
-
-    inputs = np.array(close_prices).reshape(-1,1)
-
-    inputs_transformed = scaler.transform(inputs)
-
-    X_test = []
-    look_back = 60
-
-    for i in range(look_back, len(inputs_transformed)):
-        
-        X_test.append(inputs_transformed[i-60:i, 0])
-
-    X_test = np.array(X_test)
-    X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
-    
-    
-    predicted_stock_price = model.predict(X_test)
-    predicted_stock_price = scaler.inverse_transform(predicted_stock_price)
-    
-    
-    past_year_dict = {
-        'dates': dates[60:],
-        'real_prices': close_prices[60:],
-        'predictions': [float(x) for x in list(predicted_stock_price[:,0])]
-    }
-    
-    return past_year_dict
 
 
 
