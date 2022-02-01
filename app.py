@@ -127,11 +127,11 @@ def index():
 def firstfive():
 
     # session = Session(engine)
-    # res = db.session.query(CryptoCurr.time, CryptoCurr.close).\
-    #     order_by(CryptoCurr.time.desc()).\
-    #     limit(5).all()
     res = db.session.query(CryptoCurr.time, CryptoCurr.close).\
+        order_by(CryptoCurr.time).\
         limit(5).all()
+    # res = db.session.query(CryptoCurr.time, CryptoCurr.close).\
+    #     limit(5).all()
     # session.close()
 
     # Convert list of tuples to dict
