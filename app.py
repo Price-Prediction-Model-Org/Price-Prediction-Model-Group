@@ -13,7 +13,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from models import create_classes
 import datetime
-from tensorflow.keras.models import load_model
+import tensorflow as tf
 import pickle
 
 
