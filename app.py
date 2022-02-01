@@ -13,7 +13,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from models import create_classes
 import datetime
-import tensorflow as tf
+from tensorflow.keras.models import load_model
 import pickle
 
 
@@ -184,7 +184,7 @@ def hist_data():
 def get_predictions():
     
     
-    model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/Trained_model_2_daily_BTC_4L_50N_0p1D_trainUpTo2021.h5', compile = False)
+    model_loaded = load_model('Model_Testing/Crypto_Models/Trained_model_2_daily_BTC_4L_50N_0p1D_trainUpTo2021.h5', compile = False)
 
     scaler = pickle.load(open('scaler.pkl', 'rb'))
     
