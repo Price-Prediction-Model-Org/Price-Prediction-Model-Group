@@ -77,7 +77,7 @@ def index():
         oldest_timestamp_in_db = db.session.query(CryptoCurr.time).\
                 order_by(CryptoCurr.time).\
                 limit(1).all()[0][0]
-        print(f'***********oldest_timestamp_in_db')
+        print(f'***********{oldest_timestamp_in_db}')
         while oldest_timestamp_in_db > 1388563200:
 
             # API call
@@ -101,7 +101,7 @@ def index():
             oldest_timestamp_in_db = db.session.query(CryptoCurr.time).\
                 order_by(CryptoCurr.time).\
                 limit(1).all()[0][0]
-            print(f'oldest_timestamp_in_db***********')
+            print(f'{oldest_timestamp_in_db}***********')
 
     most_recent_timestamp_in_db = db.session.query(CryptoCurr.time).\
         order_by(CryptoCurr.time.desc()).\
