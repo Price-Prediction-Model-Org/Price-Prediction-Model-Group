@@ -70,18 +70,17 @@ def index():
         # add to db
         Newdf_daily.to_sql("crypto_price", con = engine, if_exists='replace', index=False)
 
-    latest_timestamp_in_db = db.session.query(CryptoCurr.time).limit(1).all()
+    oldest_timestamp_in_db = db.session.query(CryptoCurr.time).limit(1).all()
     current_time = int(time.time())
 
-    while current_time > latest_timestamp_in_db:
+    while current_time > oldest_timestamp_in_db:
         # api call to get more data
-        latest_timestamp_in_db -= 1
+        oldest_timestamp_in_db -= 1
         url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000&toTs=-1&api_key={api_key}"
         r = requests.get(url)
         data = r.json()
-        df_daily = pd.DataFrame(data['Data']['Data'])
-        
-        latest_timestamp_in_db = db.session.query(CryptoCurr.time).limit(1).all()
+        oldest_timestamp_in_db = db.session.query(CryptoCurr.time).limit(1).all()
+
         price_df = pd.DataFrame(data['Data']['Data'])
         df_daily = price_df.append(df_daily)
         
@@ -103,8 +102,10 @@ def index():
 def firstfive():
 
     # session = Session(engine)
+    # res = db.session.query(CryptoCurr.time, CryptoCurr.close).\
+    #     order_by(CryptoCurr.time.desc()).\
+    #     limit(5).all()
     res = db.session.query(CryptoCurr.time, CryptoCurr.close).\
-        order_by(CryptoCurr.time.desc()).\
         limit(5).all()
     # session.close()
 
