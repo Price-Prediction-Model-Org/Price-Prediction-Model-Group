@@ -5,7 +5,7 @@ def create_classes(db):
         time = db.Column(db.Integer, primary_key=True)
         high = db.Column(db.Float)
         currency = db.Column(db.String(64))
-        coin = db.Column(db.Float)
+        coin = db.Column(db.String(64))
         low = db.Column(db.Float)
         open = db.Column(db.Float)
         volumefrom = db.Column(db.Float)
