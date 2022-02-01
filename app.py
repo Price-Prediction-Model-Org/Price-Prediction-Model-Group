@@ -64,9 +64,14 @@ def index():
 
         # cleaning
         df_daily = df_daily[df_daily['time'] >= 1388563200]
-        Newdf_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close','conversionType']].copy()
-        Newdf_daily['Datetime'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
-        Newdf_daily['Year'] = pd.to_datetime(Newdf_daily['Datetime'],errors = 'ignore').dt.year
+        Newdf_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close']].copy()
+        Newdf_daily.insert(2,"coin","BTC")
+        Newdf_daily.insert(2,"currency","USD")
+        Newdf_daily.dropna()
+        Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
+        Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
+
+        
         # add to db
         Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
@@ -81,11 +86,15 @@ def index():
             r = requests.get(url)
             data = r.json()
             df_daily = pd.DataFrame(data['Data']['Data'])
-            # cleaning
-            df_daily = df_daily[df_daily['time'] >= 1388563200]
-            Newdf_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close','conversionType']].copy()
-            Newdf_daily['Datetime'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
-            Newdf_daily['Year'] = pd.to_datetime(Newdf_daily['Datetime'],errors = 'ignore').dt.year
+            # cleaning df
+            Newdf_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close']].copy()
+            Newdf_daily.insert(2,"coin","BTC")
+            Newdf_daily.insert(2,"currency","USD")
+            Newdf_daily.dropna()
+            Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
+            Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
+
+        
             # add to db
             Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
@@ -111,9 +120,14 @@ def index():
         price_df = pd.DataFrame(data['Data']['Data'])
 
         # cleaning df
-        Newdf_daily = price_df[['time','high','low','open','volumefrom','volumeto','close','conversionType']].copy()
-        Newdf_daily['Datetime'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
-        Newdf_daily['Year'] = pd.to_datetime(Newdf_daily['Datetime'],errors = 'ignore').dt.year
+        Newdf_daily = price_df[['time','high','low','open','volumefrom','volumeto','close']].copy()
+        Newdf_daily.insert(2,"coin","BTC")
+        Newdf_daily.insert(2,"currency","USD")
+        Newdf_daily.dropna()
+        Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
+        Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
+
+        
 
         # load df into db
         # Newdf_daily.to_sql(name='crypto_daily_table', con=engine, if_exists='append', index=False) 
