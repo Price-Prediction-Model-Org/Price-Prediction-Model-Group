@@ -4,8 +4,6 @@ firstFive = d3.json("/first_five")
 function init() {
 
     console.log('testing')
-
-    
     
     firstFive.then((data) => {
         console.log(data)
