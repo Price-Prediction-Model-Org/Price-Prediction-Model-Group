@@ -82,7 +82,8 @@ def index():
 
         while oldest_timestamp_in_db > 1388563200:
             # API call
-            url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000&toTs=-1&api_key={api_key}"
+            oldest_timestamp_in_db -= 1
+            url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000&toTs={oldest_timestamp_in_db}&api_key={api_key}"
             r = requests.get(url)
             data = r.json()
             df_daily = pd.DataFrame(data['Data']['Data'])
