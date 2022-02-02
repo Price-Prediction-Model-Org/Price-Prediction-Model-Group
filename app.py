@@ -269,19 +269,19 @@ def index():
 #################################################
 # Routes to render html files
 #################################################
-@app.route("/about.html")
+@app.route("/about")
 def render_about():
     return render_template('about.html')
 
-@app.route("/bitcoin.html")
+@app.route("/bitcoin")
 def render_bitcoin():
     return render_template('bitcoin.html')
   
-@app.route("/ETH.html")
+@app.route("/ETH")
 def render_ETH():
     return render_template('ETH.html')
   
-@app.route("/comparison.html")
+@app.route("/comparison")
 def render_comparison():
     return render_template('comparison.html')
 
@@ -328,7 +328,7 @@ def hist_data():
 @app.route("/bitcoin_daily_data")
 def get_bitcoin_daily():
 
-    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom).filter(CryptoCurr.coin == 'BTC').filter(CryptoCurr.timestamp_year > 2016).all()
+    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom, CryptoCurr.volumeto).filter(CryptoCurr.coin == 'BTC').filter(CryptoCurr.timestamp_year > 2016).all()
     
     response = []
     
@@ -339,7 +339,8 @@ def get_bitcoin_daily():
              "open": item[2],
              "close": item[3],
              "timestamp_date": str(item[4]),
-             "volumefrom": item[5]}
+             "volumefrom": item[5],
+             "volumeto": item[6]}
         )
 
     bitcoin_daily_data = jsonify(response)
@@ -349,7 +350,7 @@ def get_bitcoin_daily():
 @app.route("/ETH_daily_data")
 def get_ETH_daily():
     
-    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom).filter(CryptoCurr.coin == 'ETH').filter(CryptoCurr.timestamp_year > 2016).all()
+    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom, CryptoCurr.volumeto).filter(CryptoCurr.coin == 'ETH').filter(CryptoCurr.timestamp_year > 2016).all()
     
     response = []
     
@@ -360,7 +361,8 @@ def get_ETH_daily():
              "open": item[2],
              "close": item[3],
              "timestamp_date": str(item[4]),
-             "volumefrom": item[5]}
+             "volumefrom": item[5],
+             "volumeto": item[6]}
         )
 
     ETH_daily_data = jsonify(response)
