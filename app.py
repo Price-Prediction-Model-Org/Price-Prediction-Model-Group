@@ -174,7 +174,7 @@ def index():
     for coin in coins:
 
         # check if the db is empty
-        if len(db.session.query(CryptoCurr.time).limit(1).all()) == 0: 
+        if len(db.session.query(CryptoCurr.time).filter(CryptoCurr.coin).limit(1).all()) == 0: 
 
             #API call
             url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym={coin}&tsym=USD&limit=2000&toTs=-1&api_key={api_key}"
