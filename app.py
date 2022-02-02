@@ -329,7 +329,7 @@ def get_comp_page_data():
 
 
 @app.route("/model_predictions_BTC")
-def get_predictions():
+def get_predictions_BTC():
     
     model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/Trained_model_2_daily_BTC_4L_50N_0p1D_trainUpTo2021.h5', compile = False)
 
@@ -347,7 +347,7 @@ def get_predictions():
 
 
 @app.route("/model_predictions_ETH")
-def get_predictions():
+def get_predictions_ETH():
     # model_loaded = tf.keras.models.load_model('<Insert ETH model here>', compile = False)
 
     # scaler = pickle.load(open('scaler.pkl', 'rb'))
