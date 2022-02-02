@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing page</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Bootstrap JS  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+
+    <!-- Plolty library-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- D3 library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+</head>
+
+<body>
+    <!-- header starts -->
+    <!-- <div class="container-fluid" id="header-bx"> -->
+        <header>
+            <div class="text-center p-3" style="background-color: blue; font-size: 16px; font-weight: lighter; color: white;">
+       Welcome to CryptoKasse<a href="" style="color: white;"></a> 
+        </div>
+        </header>
+    <!-- </div> -->
+    <div class="container-fluid" style="background-color: black; height: 18px;"></div>
+    <!-- header ends -->
+
+    <!-- title image starts -->
+    <div class="container-fluid" id="title-img" style="background-color: black;">
+        <div class="maintxt" >
+            <div class="text-center p-3">
+                
+                <img id="title-img" src="https://cdn.pixabay.com/photo/2021/09/06/12/40/cryptocurrency-6601591_1280.jpg" width="1000" height="300" alt="" class="img-responsive">
+                <div class="btm-right">
+                    <a href="https://cdn.pixabay.com/photo/2021/09/06/12/40/cryptocurrency-6601591_1280.jpg" style="color: white; font-weight: normal; font-style: italic;">Image source: pixabay</a>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <h1 id="title-text" style="color:whitesmoke">CryptoKasse</h1>
+                <p style="font-weight: normal;font-style: italic; font-size: 15px; color: whitesmoke;">Crypto Currency Price Prediction</p>
+                <!-- <hr style=" height: 1.5px; width: 100%;color:white;background-color:white">  -->
+            </div>          
+            <div class="row">
+                <marquee id="Mq" behavior="alternate",
+                scrollamount="5" ,
+                onmouseover="this.stop();",
+                onmouseout="this.start();",
+                hspace="400"
+                                             >
+                                            <!-- <span id="whitetext1" style="color: white;"></span> -->
+                                            <span id="greentext1" style="color: #0eda1f;"></span>
+                                            <span id="redtext1" style="color: red;"></span>
+                                            <span id="whitetext2" style="color: #0eda1f;"></span>
+                                            <span id="redtext2" style="color: red;"></span>
+                </marquee>
+            </div>
+        </div>      
+          
+    </div>
+    
+    <!-- title image ends -->
+    
+    <!-- container starts -->
+    <div class="container-fluid" style="background-color: black;">
+        <!-- navbar starts -->
+        <div class="row">
+                <div class="col-12">
+                    <ul class="nav nav-tabs justify-content-center">
+                        <li class="nav-item"><a class="nav-link active"href="/"style="color:blue;background-color :black; font-size: 15px; font-weight: bold;">Home</a>
+                        
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"style="color:blue;font-size: 15px; font-weight: bold; ">
+                            Assets
+                            </a>
+                          <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/bitcoin">Bitcoin</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" href="/ETH">Ethereum</a>
+                                
+                          </div>
+                        </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/comparison" style="color:blue;font-size: 15px; font-weight: bold;">Comparisons</a>
+                    </li>
+                    </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/about" style="color:blue;font-size: 15px; font-weight: bold;">About</a>
+                    </li>
+                        
+                      </ul>
+                </div>
+        </div>
+        <!-- navbar ends -->
+         <!-- content starts -->
+        <div class="row flex-xl-nowrap" >
+                        <!-- main content starts -->
+            <div class="col-12 col-md-9 col-xl-10 py-md-5 ev-content"style="margin-left:100px;">
+                <div class="col-lg-12" >
+                    <!-- <br>class="ev-title" id="head-1" -->
+                    <h1 style="color:blue ;">About CryptoKasse </h1>
+                    <hr>
+                    <p style="padding-left: 50px; padding-right: 50px;color:whitesmoke">Cryptocurrencies are digital assets and decentralized systems that allow for secure online payments.</p>
+                    <!-- <br> -->
+                    <h6 style="color:blue ;">Types of Cryptocurrency</h6> 
+                    <p style="padding-left: 50px; padding-right: 50px;color:whitesmoke">Bitcoin is the most popular and valuable cryptocurrency. 
+                        There are thousands of cryptocurrencies present in the market today.Each cryptocurrency claims to have a different function and specification.
+                        For example, Ethereum's ether markets itself as gas for the underlying 
+                        smart contract platform. Ripple's XRP is used by banks to facilitate transfers 
+                        between different geographies.</p>
+                    <p style="padding-left: 50px; padding-right: 50px;color:whitesmoke">Bitcoin, which was made available to the public in 2009, remains the most 
+                            widely traded and covered cryptocurrency.</p>
+                    <p style="padding-left: 50px; padding-right: 50px;color:whitesmoke">At CryptoKasse we provide daily, weekly and monthly predictions for Bitcoin and Ethereum.</p>
+                </div>
+                
+                <div class="row" id="description-container" >
+                    <div class="col-md-12">
+                        <br>
+                        <h2 id="head-2"style="color:blue ;">Data Source </h2>
+                        <hr>
+                        <p style="padding-left: 50px; padding-right: 50px;color:whitesmoke"> The crypto price data is pulled in through an API on CryptoCompare:
+                        <a style="padding-left: 50px; padding-right: 50px;color:greenyellow "href="https://min-api.cryptocompare.com/documentation?key=Historical&cat=dataHistohour">CryptoCompare</a></p>
+                        <br>
+                        <p style="padding-left: 50px; padding-right: 50px;color:whitesmoke">The pricing information includes: timestamp, high, low, open, volumefrom, volumeto, and close.</p>
+                        <br>
+                        <br>
+                                            
+                    </div>
+                </div>
+                <div class="row" id="description-container" >
+                    <div class="col-md-12">
+                        <br>
+                        <h2 id="head-2"style="color:blue ;">ETL </h2>
+                        <hr>
+                        <p style="padding-left: 50px; padding-right: 50px;color:whitesmoke">The data is extracted and aggregated from the recurring API to gather historical data for the chosen crypto currency. This data will be put into a Pandas Dataframe after extracting the necessary info from the API json object that is returned. Then it will be appended into a PostgreSQL database for storage. </p>
+                                                <br>
+                                            
+                    </div>
+                </div>
+                <div class="row" id="description-container" >
+                    <div class="col-md-12">
+                        <br>
+                        <h2 id="head-2"style="color:blue ;">Machine Learning Model </h2>
+                        <hr>
+                        <p style="padding-left: 50px; padding-right: 50px;color:whitesmoke">The Long Short Term Model (LSTM) has been used to do the price forecasting. LSTM is a slightly more sophisticated version of a Recurrent Neural Network (RNN) which incorporates long term memory. The model will be trained on historical price data and used to predict the next value in the series. (Time window for predictions, tbd)</p>
+                        
+                        <br>
+                                            
+                    </div>
+                </div>
+                <div class="row" id="description-container" >
+                    <div class="col-md-12">
+                        <br>
+                        <h2 id="head-2"style="color:blue ;">Analysis </h2>
+                        <hr>
+                        <h6 style="color:blue ;">Visualizations:</h6>
+                        <p style="padding-left: 50px; padding-right: 400px;"> </p>
+                        <br>
+                        <p style="padding-left: 50px; padding-right: 400px;"></p>
+                        <br>
+                        <ul style="padding-left: 100px; padding-right: 400px;">
+                            <li></li>
+                            
+                        </ul>
+                        <br>
+                        <br>
+                                            
+                    </div>
+                </div>
+
+                
+            </div>
+            <!-- main content ends -->
+            <!-- <div class="col-12 col-md-3 col-xl-2 ev-sidebar" style="background-color:rgb(12, 12, 12);">  -->
+             </div>   
+        </div>
+    </div>
+    <!-- container ends -->
+    <!-- footer starts -->
+    <footer class="bg-light text-center text-lg-start">
+        <div class="text-center p-3" style="background-color: blue;">
+            <h6 style="padding-left: 200px; padding-right: 200px;font-size: 16px; font-weight:bolder; color: white;">Disclaimer:</h6>
+        <p style="padding-left: 200px; padding-right: 200px;font-size: 16px; font-weight: lighter; color: white;">At CryptoKasse we provide daily,weekly and  monthly  predictions for
+            Bitcoin and Ethereum.Cryptocurrencies are subject to market risk.
+            This is because there is no way to predict what will happen in the future 
+            or whether a given asset will increase or decrease in value.
+            Because the market cannot be accurately predicted or completely controlled, 
+            no investment is risk-free.So please do not take these predictions as 
+            financial advice. </p>
+            <p style="padding-left: 200px; padding-right: 200px; font-size: 16px; font-weight: lighter; color: white;">Price Prediction by: <a href="/about" style="color: white;">Our Team</a> </p>
+        </div>
+    </footer>
+    <!-- footer ends -->
+    <script src="../static/marquee.js"></script>
+</body>
+</html>
