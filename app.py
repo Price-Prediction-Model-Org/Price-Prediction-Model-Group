@@ -184,7 +184,7 @@ def index():
 
             # cleaning
             Newdf_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close']].copy()
-            Newdf_daily.insert(2,"coin", {coin})
+            Newdf_daily.insert(2,"coin", coin)
             Newdf_daily.insert(2,"currency","USD")
             Newdf_daily.dropna()
             Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
@@ -194,8 +194,9 @@ def index():
             Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
             oldest_timestamp_in_df = db.session.query(CryptoCurr.time).\
-                    order_by(CryptoCurr.time).\
-                    limit(1).all()[0][0]
+                filter(CryptoCurr.coin == coin).\
+                order_by(CryptoCurr.time).\
+                limit(1).all()[0][0]
             new_df_daily = pd.DataFrame()
            
             while oldest_timestamp_in_df > 1388563200:
@@ -209,7 +210,7 @@ def index():
                 
                 # cleaning df
                 df_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close']].copy()
-                df_daily.insert(2,"coin", {coin})
+                df_daily.insert(2,"coin", coin)
                 df_daily.insert(2,"currency","USD")
                 df_daily.dropna()
                 df_daily['timestamp_date'] = pd.to_datetime(df_daily['time'],unit = 's')
@@ -224,6 +225,7 @@ def index():
 
         # get the most recent date
         most_recent_timestamp_in_db = db.session.query(CryptoCurr.time).\
+            filter(CryptoCurr.coin == coin).\
             order_by(CryptoCurr.time.desc()).\
             limit(1).all()[0][0]
         current_date = time.time()
@@ -243,7 +245,7 @@ def index():
 
             # cleaning df
             Newdf_daily = price_df[['time','high','low','open','volumefrom','volumeto','close']].copy()
-            Newdf_daily.insert(2,"coin",{coin})
+            Newdf_daily.insert(2,"coin", coin)
             Newdf_daily.insert(2,"currency","USD")
             Newdf_daily.dropna()
             Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')

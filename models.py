@@ -1,8 +1,8 @@
 def create_classes(db):
     class crypto_info(db.Model):
         __tablename__ = 'crypto_price'
-
-        time = db.Column(db.Integer, primary_key=True)
+        id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+        time = db.Column(db.Integer)
         high = db.Column(db.Float)
         currency = db.Column(db.String(64))
         coin = db.Column(db.String(64))
