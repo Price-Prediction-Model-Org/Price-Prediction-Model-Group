@@ -254,10 +254,33 @@ def index():
         # load df into db
         # Newdf_daily.to_sql(name='crypto_daily_table', con=engine, if_exists='append', index=False) 
         Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append')
+        
+        Newdf_daily = pd.DataFrame()
 
     return render_template("index.html")
  
+ 
+#################################################
+# Routes to render html files
+#################################################
+@app.route("/about")
+def render_about():
+    return render_template('about.html')
 
+@app.route("/bitcoin")
+def render_about():
+    return render_template('bitcoin.html')
+  
+@app.route("/ETH")
+def render_about():
+    return render_template('ETH.html')
+  
+@app.route("/comparison")
+def render_about():
+    return render_template('comparison.html')
+ 
+ 
+#JUST TEST ROUTE
 @app.route("/first_five")
 def firstfive():
 
@@ -292,6 +315,18 @@ def hist_data():
     return hist_data_json
 
 
+@app.route("/comparison_page_data")
+def get_comp_page_data():
+
+    # hist_data_dict = {}
+    
+    # hist_data_json = jsonify(hist_data_dict)
+
+    # return hist_data_json
+    
+    pass
+
+
 @app.route("/model_predictions_BTC")
 def get_predictions():
     
@@ -310,22 +345,24 @@ def get_predictions():
     return BTC_model_preds_json
 
 
-# @app.route("/model_predictions_ETH")
-# def get_predictions():
-    
-#     model_loaded = tf.keras.models.load_model('<Insert ETH model here>', compile = False)
+@app.route("/model_predictions_ETH")
+def get_predictions():
+    # model_loaded = tf.keras.models.load_model('<Insert ETH model here>', compile = False)
 
-#     scaler = pickle.load(open('scaler.pkl', 'rb'))
-#     assert isinstance(scaler, MinMaxScaler)
-#     scaler.clip = False  # add this line
+    # scaler = pickle.load(open('scaler.pkl', 'rb'))
+    # assert isinstance(scaler, MinMaxScaler)
+    # scaler.clip = False  # add this line
     
-#     coin = 'ETH'
+    # coin = 'ETH'
     
-#     past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
+    # past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
 
-#     BTC_model_preds_json = jsonify(past_year_dict)
+    # BTC_model_preds_json = jsonify(past_year_dict)
 
-#     return BTC_model_preds_json
+    # return BTC_model_preds_json
+    pass
+    
+
 
 
 
