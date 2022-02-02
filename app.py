@@ -268,23 +268,23 @@ def index():
 #################################################
 # Routes to render html files
 #################################################
-@app.route("/about")
+@app.route("/about.html")
 def render_about():
     return render_template('about.html')
 
-@app.route("/bitcoin")
+@app.route("/bitcoin.html")
 def render_bitcoin():
     return render_template('bitcoin.html')
   
-@app.route("/ETH")
+@app.route("/ETH.html")
 def render_ETH():
     return render_template('ETH.html')
   
-@app.route("/comparison")
+@app.route("/comparison.html")
 def render_comparison():
     return render_template('comparison.html')
- 
- 
+
+
 #JUST TEST ROUTE
 @app.route("/first_five")
 def firstfive():
