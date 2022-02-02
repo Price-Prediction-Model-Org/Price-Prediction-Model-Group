@@ -107,86 +107,85 @@ def predict_past_year(db, db_table, coin, model, scaler):
 @app.route("/")
 def index():
    
-    # check if the db is empty
-    if len(db.session.query(CryptoCurr.time).limit(1).all()) == 0: 
-        url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000&toTs=-1&api_key={api_key}"
-        r = requests.get(url)
-        data = r.json()
-        df_daily = pd.DataFrame(data['Data']['Data'])
+    coins = ['ETH', 'BTC']
 
-        # cleaning
-        Newdf_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close']].copy()
-        Newdf_daily.insert(2,"coin","BTC")
-        Newdf_daily.insert(2,"currency","USD")
-        Newdf_daily.dropna()
-        Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
-        Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
+    for coin in coins:
 
-        
-        # add to db
-        Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
+        # check if the db is empty
+        if len(db.session.query(CryptoCurr.time).limit(1).all()) == 0: 
 
-        oldest_timestamp_in_df = db.session.query(CryptoCurr.time).\
-                order_by(CryptoCurr.time).\
-                limit(1).all()[0][0]
-        new_df_daily = pd.DataFrame()
-
-        print(f'***********{oldest_timestamp_in_df}')
-
-        
-        while oldest_timestamp_in_df > 1388563200:
-
-            # API call
-            oldest_timestamp_in_df -= 1
-            url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=2000&toTs={oldest_timestamp_in_df}&api_key={api_key}"
+            #API call
+            url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym={coin}&tsym=USD&limit=2000&toTs=-1&api_key={api_key}"
             r = requests.get(url)
             data = r.json()
             df_daily = pd.DataFrame(data['Data']['Data'])
-            # cleaning df
-            
-            df_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close']].copy()
-            df_daily.insert(2,"coin","BTC")
-            df_daily.insert(2,"currency","USD")
-            df_daily.dropna()
-            df_daily['timestamp_date'] = pd.to_datetime(df_daily['time'],unit = 's')
-            df_daily['timestamp_year'] = pd.to_datetime(df_daily['timestamp_date'],errors = 'ignore').dt.year
-            new_df_daily = new_df_daily.append(df_daily)
-            oldest_timestamp_in_df = new_df_daily.iloc[0]['time']
 
-            print(f'{oldest_timestamp_in_df}***********')
-        new_df_daily = new_df_daily[new_df_daily['time'] >= 1388563200]
+            # cleaning
+            Newdf_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close']].copy()
+            Newdf_daily.insert(2,"coin", {coin})
+            Newdf_daily.insert(2,"currency","USD")
+            Newdf_daily.dropna()
+            Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
+            Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
 
-        # add to db
-        new_df_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
+            # add to db
+            Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
-            
+            oldest_timestamp_in_df = db.session.query(CryptoCurr.time).\
+                    order_by(CryptoCurr.time).\
+                    limit(1).all()[0][0]
+            new_df_daily = pd.DataFrame()
+           
+            while oldest_timestamp_in_df > 1388563200:
 
-    most_recent_timestamp_in_db = db.session.query(CryptoCurr.time).\
-        order_by(CryptoCurr.time.desc()).\
-        limit(1).all()[0][0]
-    current_date = time.time()
+                # API call
+                oldest_timestamp_in_df -= 1
+                url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym={coin}&tsym=USD&limit=2000&toTs={oldest_timestamp_in_df}&api_key={api_key}"
+                r = requests.get(url)
+                data = r.json()
+                df_daily = pd.DataFrame(data['Data']['Data'])
+                
+                # cleaning df
+                df_daily = df_daily[['time','high','low','open','volumefrom','volumeto','close']].copy()
+                df_daily.insert(2,"coin", {coin})
+                df_daily.insert(2,"currency","USD")
+                df_daily.dropna()
+                df_daily['timestamp_date'] = pd.to_datetime(df_daily['time'],unit = 's')
+                df_daily['timestamp_year'] = pd.to_datetime(df_daily['timestamp_date'],errors = 'ignore').dt.year
+                new_df_daily = new_df_daily.append(df_daily)
+                oldest_timestamp_in_df = new_df_daily.iloc[0]['time']
 
-    limit = current_date - most_recent_timestamp_in_db
-    days = int(limit/60/60/24)
+            # only dates jan. 1 2014 and later
+            new_df_daily = new_df_daily[new_df_daily['time'] >= 1388563200]
+            # add to db
+            new_df_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
-   
-    # api call to get more data
-    if days > 0:
-        url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit={days}&toTs=-1&api_key={api_key}"
-        r = requests.get(url)
-        data = r.json()
-  
-        price_df = pd.DataFrame(data['Data']['Data'])
-
-        # cleaning df
-        Newdf_daily = price_df[['time','high','low','open','volumefrom','volumeto','close']].copy()
-        Newdf_daily.insert(2,"coin","BTC")
-        Newdf_daily.insert(2,"currency","USD")
-        Newdf_daily.dropna()
-        Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
-        Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
-
+        # get the most recent date
+        most_recent_timestamp_in_db = db.session.query(CryptoCurr.time).\
+            order_by(CryptoCurr.time.desc()).\
+            limit(1).all()[0][0]
+        current_date = time.time()
         
+        # Count num days to get date on, from most recent in db until today
+        limit = current_date - most_recent_timestamp_in_db
+        days = int(limit/60/60/24)
+        
+        # api call to get more data
+        if days > 0:
+
+            # API call
+            url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym={coin}&tsym=USD&limit={days}&toTs=-1&api_key={api_key}"
+            r = requests.get(url)
+            data = r.json()
+            price_df = pd.DataFrame(data['Data']['Data'])
+
+            # cleaning df
+            Newdf_daily = price_df[['time','high','low','open','volumefrom','volumeto','close']].copy()
+            Newdf_daily.insert(2,"coin",{coin})
+            Newdf_daily.insert(2,"currency","USD")
+            Newdf_daily.dropna()
+            Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
+            Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
 
         # load df into db
         # Newdf_daily.to_sql(name='crypto_daily_table', con=engine, if_exists='append', index=False) 
@@ -199,7 +198,7 @@ def index():
 def firstfive():
 
     # session = Session(engine)
-    res = db.session.query(CryptoCurr.time, CryptoCurr.close).\
+    res = db.session.query(CryptoCurr.coin, CryptoCurr.time, CryptoCurr.close).\
         order_by(CryptoCurr.time).\
         limit(5).all()
     # res = db.session.query(CryptoCurr.time, CryptoCurr.close).\
@@ -212,7 +211,6 @@ def firstfive():
         dict[i[0]] = float(i[1])
 
     return jsonify(dict)
-
 
 @app.route("/hist_data")
 def hist_data():
