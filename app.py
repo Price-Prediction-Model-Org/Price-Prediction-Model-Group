@@ -254,7 +254,7 @@ def index():
 
         # load df into db
         # Newdf_daily.to_sql(name='crypto_daily_table', con=engine, if_exists='append', index=False) 
-        Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append')
+        Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
         
         Newdf_daily = pd.DataFrame()
 
@@ -363,13 +363,6 @@ def get_predictions_ETH():
     # return BTC_model_preds_json
     pass
     
-
-
-
-
-
-
-
 
 
 
