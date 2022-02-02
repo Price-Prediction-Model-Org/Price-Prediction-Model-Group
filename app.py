@@ -101,9 +101,71 @@ def predict_past_year(db, db_table, coin, model, scaler):
     
     return past_year_dict
 
+
+def predict_dates(most_recent_date, predict_days):
+    
+    prediction_dates = pd.date_range(most_recent_date, periods=predict_days+1).tolist()[1:]
+    
+    return prediction_dates
+
+
+def predict_X_days(db, db_table, coin, model, predict_days, scaler):
+    """Predict 'days' into the future by feeding back daily predictions into model
+
+    Args:
+        session (object): connection to sql db
+        coin (string): [coin that is going to be predicted]
+        model ([loaded LSTM model]): [trained  model loaded in from directory]
+        predict_days ([int]): [Number of days to predict into the future]
+
+    Returns:
+        x_days_dict [dict]: [dictionary containing dates, predictions, real prices]
+    """
+    
+    look_back = 60
+    ninety_days_back = datetime.date.today() - datetime.timedelta(days=90)
+    
+    results = db.session.query(db_table.timestamp_date, db_table.close).filter(db_table.coin == coin).filter(db_table.timestamp_date >= ninety_days_back).order_by(db_table.timestamp_date).all()
+    
+    dates = [x[0] for x in results]
+    close_prices = [float(x[1]) for x in results]
+    
+    inputs_list = close_prices[-60:]
+    inputs = np.array(inputs_list).reshape(-1,1)
+    
+    sliding_inputs = scaler.transform(inputs)
+    
+    predictions = []
+
+    for _ in range(predict_days):
+        
+        prediction = model.predict(sliding_inputs.reshape(1,-1,1))
+        predictions.append(prediction[:,0][0])
+        
+        sliding_inputs = sliding_inputs.ravel().tolist()
+        del sliding_inputs[0]
+        sliding_inputs.append(prediction[:,0][0])
+        
+        sliding_inputs = np.array(sliding_inputs).reshape(1,-1,1)
+        
+    predictions = np.array(predictions).reshape(-1,1)
+    predicted_stock_price = scaler.inverse_transform(predictions)
+    
+    pred_dates = predict_dates(dates[-1], predict_days)
+        
+    forecast_dict = {
+        'real_price_dates': dates,
+        'pred_dates': pred_dates,
+        'real_prices': close_prices,
+        'predictions': list(predicted_stock_price[:,0])
+    }
+    
+    return forecast_dict
+
 #################################################
 # Flask Routes
 #################################################
+
 @app.route("/")
 def index():
    
@@ -230,9 +292,8 @@ def hist_data():
     return hist_data_json
 
 
-@app.route("/model_predictions")
+@app.route("/model_predictions_BTC")
 def get_predictions():
-    
     
     model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/Trained_model_2_daily_BTC_4L_50N_0p1D_trainUpTo2021.h5', compile = False)
 
@@ -240,22 +301,31 @@ def get_predictions():
     assert isinstance(scaler, MinMaxScaler)
     scaler.clip = False  # add this line
     
-    model_preds_dict = {}
+    coin = 'BTC'
     
-    coins = ['BTC']
+    past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
+
+    BTC_model_preds_json = jsonify(past_year_dict)
+
+    return BTC_model_preds_json
+
+
+# @app.route("/model_predictions_ETH")
+# def get_predictions():
     
-    for coin in coins:
-        
-        past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
-        
-        model_preds_dict[coin] = past_year_dict
+#     model_loaded = tf.keras.models.load_model('<Insert ETH model here>', compile = False)
 
-    model_preds_json = jsonify(model_preds_dict)
+#     scaler = pickle.load(open('scaler.pkl', 'rb'))
+#     assert isinstance(scaler, MinMaxScaler)
+#     scaler.clip = False  # add this line
+    
+#     coin = 'ETH'
+    
+#     past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
 
-    return model_preds_json
+#     BTC_model_preds_json = jsonify(past_year_dict)
 
-# Function to make predictions for the past year in one day increments
-
+#     return BTC_model_preds_json
 
 
 
