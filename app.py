@@ -224,6 +224,8 @@ def index():
             # add to db
             new_df_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
+            new_df_daily = pd.DataFrame()
+            
         # get the most recent date
         most_recent_timestamp_in_db = db.session.query(CryptoCurr.time).\
             filter(CryptoCurr.coin == coin).\
@@ -235,6 +237,7 @@ def index():
         limit = current_date - most_recent_timestamp_in_db
         days = int(limit/60/60/24)
         
+        price_daily_clean_df = pd.DataFrame()
         # api call to get more data
         if days > 0:
 
@@ -245,18 +248,19 @@ def index():
             price_df = pd.DataFrame(data['Data']['Data'])
 
             # cleaning df
-            Newdf_daily = price_df[['time','high','low','open','volumefrom','volumeto','close']].copy()
-            Newdf_daily.insert(2,"coin", coin)
-            Newdf_daily.insert(2,"currency","USD")
-            Newdf_daily.dropna()
-            Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
-            Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
+            price_daily_clean_df = price_df[['time','high','low','open','volumefrom','volumeto','close']].copy()
+            price_daily_clean_df.insert(2,"coin", coin)
+            price_daily_clean_df.insert(2,"currency","USD")
+            price_daily_clean_df.dropna()
+            price_daily_clean_df['timestamp_date'] = pd.to_datetime(price_daily_clean_df['time'],unit = 's')
+            price_daily_clean_df['timestamp_year'] = pd.to_datetime(price_daily_clean_df['timestamp_date'],errors = 'ignore').dt.year
+            
+            price_daily_clean_df.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
         # load df into db
         # Newdf_daily.to_sql(name='crypto_daily_table', con=engine, if_exists='append', index=False) 
-        Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
-        
-        Newdf_daily = pd.DataFrame()
+        # price_daily_clean_df.to_sql("crypto_price", con = engine, if_exists='append', index=False)
+
 
     return render_template("index.html")
  
