@@ -1,5 +1,3 @@
-
-
 d3.json("/ETH_daily_data").then(data=>{
     console.log(data);
 

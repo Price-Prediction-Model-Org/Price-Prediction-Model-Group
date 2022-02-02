@@ -1,5 +1,3 @@
-
-
 ////////--------BTC DATA---//////////////////////
 d3.json("/bitcoin_daily_data").then(btcdata=>{
     // console.log(btcdata);

@@ -369,11 +369,11 @@ def get_ETH_daily():
 
 @app.route("/comparison_page_data")
 def get_comp_page_data():
+    pass
 
 #################################################
 # Model Routes to get model prediction data
 #################################################
-
 @app.route("/model_predictions_BTC")
 def get_predictions_BTC():
     
