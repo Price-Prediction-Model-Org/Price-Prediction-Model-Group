@@ -269,15 +269,15 @@ def render_about():
     return render_template('about.html')
 
 @app.route("/bitcoin")
-def render_about():
+def render_bitcoin():
     return render_template('bitcoin.html')
   
 @app.route("/ETH")
-def render_about():
+def render_ETH():
     return render_template('ETH.html')
   
 @app.route("/comparison")
-def render_about():
+def render_comparison():
     return render_template('comparison.html')
  
  
