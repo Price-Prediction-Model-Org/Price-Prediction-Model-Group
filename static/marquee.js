@@ -1,11 +1,11 @@
 
 
 ////////--------BTC DATA---//////////////////////
-d3.json("Daily.json").then(btcdata=>{
+d3.json("/bitcoin_daily_data").then(btcdata=>{
     // console.log(btcdata);
     
 ////////--------ETH DATA---//////////////////////
-d3.json("ETHDaily.json").then(ethdata=>{
+d3.json("/ETH_daily_data").then(ethdata=>{
     // console.log(ethdata);   
 
 console.log(btcdata);

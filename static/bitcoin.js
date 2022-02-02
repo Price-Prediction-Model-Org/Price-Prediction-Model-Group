@@ -1,4 +1,4 @@
-d3.json("Daily.json").then(data=>{
+d3.json("/bitcoin_daily_data").then(data=>{
     console.log(data);
 
        

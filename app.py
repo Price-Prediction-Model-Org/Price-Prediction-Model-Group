@@ -1,3 +1,4 @@
+from distutils.cygwinccompiler import CygwinCCompiler
 from config import api_key, pwd
 from sqlalchemy import extract
 from sqlalchemy.ext.automap import automap_base
@@ -320,17 +321,58 @@ def hist_data():
     return hist_data_json
 
 
+#################################################
+# Routes to get coin data (no predictions)
+#################################################
+
+@app.route("/bitcoin_daily_data")
+def get_bitcoin_daily():
+
+    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom).filter(CryptoCurr.coin == 'BTC').filter(CryptoCurr.timestamp_year > 2016).all()
+    
+    response = []
+    
+    for item in results:
+        response.append(
+            {"high": item[0],
+             "low": item[1],
+             "open": item[2],
+             "close": item[3],
+             "timestamp_date": str(item[4]),
+             "volumefrom": item[5]}
+        )
+
+    bitcoin_daily_data = jsonify(response)
+    
+    return bitcoin_daily_data
+
+@app.route("/ETH_daily_data")
+def get_ETH_daily():
+    
+    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom).filter(CryptoCurr.coin == 'ETH').filter(CryptoCurr.timestamp_year > 2016).all()
+    
+    response = []
+    
+    for item in results:
+        response.append(
+            {"high": item[0],
+             "low": item[1],
+             "open": item[2],
+             "close": item[3],
+             "timestamp_date": str(item[4]),
+             "volumefrom": item[5]}
+        )
+
+    ETH_daily_data = jsonify(response)
+    
+    return ETH_daily_data
+
 @app.route("/comparison_page_data")
 def get_comp_page_data():
 
-    # hist_data_dict = {}
-    
-    # hist_data_json = jsonify(hist_data_dict)
-
-    # return hist_data_json
-    
-    pass
-
+#################################################
+# Model Routes to get model prediction data
+#################################################
 
 @app.route("/model_predictions_BTC")
 def get_predictions_BTC():

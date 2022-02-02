@@ -1,6 +1,6 @@
 
 
-d3.json("ETHDaily.json").then(data=>{
+d3.json("/ETH_daily_data").then(data=>{
     console.log(data);
 
     ///////////////////////////----------------TABLE------------///////////////////////////////
