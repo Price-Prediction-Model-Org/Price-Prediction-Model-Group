@@ -190,6 +190,7 @@ def index():
             Newdf_daily['timestamp_date'] = pd.to_datetime(Newdf_daily['time'],unit = 's')
             Newdf_daily['timestamp_year'] = pd.to_datetime(Newdf_daily['timestamp_date'],errors = 'ignore').dt.year
 
+
             # add to db
             Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
@@ -253,7 +254,7 @@ def index():
 
         # load df into db
         # Newdf_daily.to_sql(name='crypto_daily_table', con=engine, if_exists='append', index=False) 
-        Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append')
+        Newdf_daily.to_sql("crypto_price", con = engine, if_exists='append', index=False)
 
     return render_template("index.html")
  
