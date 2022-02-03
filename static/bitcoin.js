@@ -117,8 +117,8 @@ d3.json("Model.json").then(data => {
     // console.log(data);
 ///////////---trace for Predictions for past date---//////
    let trace3 = {
-     x:data.map(row => row.dates),
-     y: data.map(row => row.predictions),
+     x:data.dates,
+     y: data.predictions,
         name: "Predictions",
         mode: 'lines',
         line: {
@@ -128,8 +128,8 @@ d3.json("Model.json").then(data => {
     }
 ///////////---trace for real data for past date---//////
     let trace4 = {
-      x:data.map(row => row.dates),
-      y: data.map(row => row.real_prices),
+      x:data.dates,
+      y: data.real_prices,
       name: "Realdata",
       mode: 'lines',
       line: {
