@@ -6,8 +6,9 @@ d3.json("/bitcoin_daily_data").then(btcdata=>{
 d3.json("/ETH_daily_data").then(ethdata=>{
     // console.log(ethdata);   
 
-console.log(btcdata);
-console.log(ethdata);
+    console.log(btcdata);
+    console.log(ethdata);
+
 
     //////////////////////////------MARQUEE----------//////////////////////////////
     
@@ -45,6 +46,7 @@ console.log(ethdata);
     var allhigh=formatter.format(Math.max(...btcdata.map(row => row.high)));///... spreads array
     var alllow=formatter.format(Math.min(...btcdata.map(row=>row.low)));
 
+    console.log(volume)
 
     d3.select("#assetname1").text(assetname);
     d3.select("#closeprice1").text(closeprice);
