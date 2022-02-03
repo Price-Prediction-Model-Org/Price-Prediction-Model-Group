@@ -6,12 +6,18 @@ d3.json("/ETH_daily_data").then(data=>{
         style: 'currency',
         currency: 'USD',
     });
+    var millionformatter=new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        notation: "compact",
+        compactDisplay: "short"
+    });
 
     var openprice=formatter.format(data[(data.length)-1].open);
     var closeprice=formatter.format(data[(data.length)-1].close);
     var allhigh=formatter.format(Math.max(...data.map(row => row.high)));///... spreads array
     var alllow=formatter.format(Math.min(...data.map(row=>row.low)));
-    var volume=formatter.format(data[(data.length)-1].volumefrom);
+    var volume=millionformatter.format((data[(data.length)-1].volumefrom)+(data[(data.length)-1].volumeto));
 
     d3.select("#openprice").text(openprice);
     d3.select("#closeprice").text(closeprice);
