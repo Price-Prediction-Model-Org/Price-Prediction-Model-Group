@@ -352,7 +352,6 @@ def get_bitcoin_daily():
 def get_ETH_daily():
     
     results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom, CryptoCurr.volumeto).filter(CryptoCurr.coin == 'ETH').filter(CryptoCurr.timestamp_year > 2016).all()
-    print(results[6])
     response = []
     
     for item in results:
