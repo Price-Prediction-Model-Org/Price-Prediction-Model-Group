@@ -1,3 +1,4 @@
+from curses.ascii import CR
 from distutils.cygwinccompiler import CygwinCCompiler
 from config import api_key, pwd
 from sqlalchemy import extract
@@ -351,7 +352,7 @@ def get_bitcoin_daily():
 def get_ETH_daily():
     
     results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom, CryptoCurr.volumeto).filter(CryptoCurr.coin == 'ETH').filter(CryptoCurr.timestamp_year > 2016).all()
-    
+    print(results[6])
     response = []
     
     for item in results:
