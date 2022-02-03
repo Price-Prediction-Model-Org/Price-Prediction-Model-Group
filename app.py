@@ -1,3 +1,32 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@JacobTrevithick 
+Price-Prediction-Model-Org
+/
+Price-Prediction-Model-Group
+Public
+Code
+Issues
+Pull requests
+Projects
+Wiki
+Security
+Insights
+Settings
+Price-Prediction-Model-Group/app.py /
+@Annaolivia5
+Annaolivia5 updated plots in js
+Latest commit 3ca6012 19 hours ago
+ History
+ 1 contributor
+419 lines (295 sloc)  13.8 KB
+   
+from curses.ascii import CR
 from distutils.cygwinccompiler import CygwinCCompiler
 from config import api_key, pwd
 from sqlalchemy import extract
@@ -55,14 +84,12 @@ engine = create_engine(DATABASE_URL, echo = False)
 
 def predict_past_year(db, db_table, coin, model, scaler):
     """Function to make predictions for the past year in one day increments for a given coin and model
-
     Args:
         db (object): sqlalchemy database object
         db_table (object): database table to pull data from
         coin (string): [coin that is going to be predicted]
         model ([loaded LSTM model]): [trained  model loaded in from directory]
         scaler (pickle file): saved MinMaxScaler
-
     Returns:
         past_year_dict [dict]: [dictionary containing dates, predictions, real prices]
     """
@@ -112,13 +139,11 @@ def predict_dates(most_recent_date, predict_days):
 
 def predict_X_days(db, db_table, coin, model, predict_days, scaler):
     """Predict 'days' into the future by feeding back daily predictions into model
-
     Args:
         session (object): connection to sql db
         coin (string): [coin that is going to be predicted]
         model ([loaded LSTM model]): [trained  model loaded in from directory]
         predict_days ([int]): [Number of days to predict into the future]
-
     Returns:
         x_days_dict [dict]: [dictionary containing dates, predictions, real prices]
     """
@@ -269,19 +294,19 @@ def index():
 #################################################
 # Routes to render html files
 #################################################
-@app.route("/about.html")
+@app.route("/about")
 def render_about():
     return render_template('about.html')
 
-@app.route("/bitcoin.html")
+@app.route("/bitcoin")
 def render_bitcoin():
     return render_template('bitcoin.html')
   
-@app.route("/ETH.html")
+@app.route("/ETH")
 def render_ETH():
     return render_template('ETH.html')
   
-@app.route("/comparison.html")
+@app.route("/comparison")
 def render_comparison():
     return render_template('comparison.html')
 
@@ -308,7 +333,6 @@ def firstfive():
 @app.route("/hist_data")
 def hist_data():
     """Route to gather and return historical data for all crypto currencies
-
     Returns:
         hist_data_json [json]: json object containing historical data
     """
@@ -328,7 +352,7 @@ def hist_data():
 @app.route("/bitcoin_daily_data")
 def get_bitcoin_daily():
 
-    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom).filter(CryptoCurr.coin == 'BTC').filter(CryptoCurr.timestamp_year > 2016).all()
+    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom, CryptoCurr.volumeto).filter(CryptoCurr.coin == 'BTC').filter(CryptoCurr.timestamp_year > 2016).all()
     
     response = []
     
@@ -339,7 +363,8 @@ def get_bitcoin_daily():
              "open": item[2],
              "close": item[3],
              "timestamp_date": str(item[4]),
-             "volumefrom": item[5]}
+             "volumefrom": item[5],
+             "volumeto": item[6]}
         )
 
     bitcoin_daily_data = jsonify(response)
@@ -349,8 +374,7 @@ def get_bitcoin_daily():
 @app.route("/ETH_daily_data")
 def get_ETH_daily():
     
-    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom).filter(CryptoCurr.coin == 'ETH').filter(CryptoCurr.timestamp_year > 2016).all()
-    
+    results = db.session.query(CryptoCurr.high, CryptoCurr.low, CryptoCurr.open, CryptoCurr.close, CryptoCurr.timestamp_date, CryptoCurr.volumefrom, CryptoCurr.volumeto).filter(CryptoCurr.coin == 'ETH').filter(CryptoCurr.timestamp_year > 2016).all()
     response = []
     
     for item in results:
@@ -360,7 +384,8 @@ def get_ETH_daily():
              "open": item[2],
              "close": item[3],
              "timestamp_date": str(item[4]),
-             "volumefrom": item[5]}
+             "volumefrom": item[5],
+             "volumeto": item[6]}
         )
 
     ETH_daily_data = jsonify(response)
@@ -415,3 +440,15 @@ def get_predictions_ETH():
 
 if __name__ == "__main__":
     app.run(debug=True)
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
