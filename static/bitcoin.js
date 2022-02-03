@@ -7,14 +7,19 @@ d3.json("/bitcoin_daily_data").then(data=>{
         currency: 'USD',
     });
     
-    
+    var millionformatter=new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        notation: "compact",
+        compactDisplay: "short"
+    });
     ///////////////////////////----------------TABLE------------///////////////////////////////
 
     var openprice=formatter.format(data[(data.length)-1].open);
     var closeprice=formatter.format(data[(data.length)-1].close);
     var allhigh=formatter.format(Math.max(...data.map(row => row.high)));///... spreads array
     var alllow=formatter.format(Math.min(...data.map(row=>row.low)));
-    var volume=formatter.format(data[(data.length)-1].volumefrom);
+    var volume=millionformatter.format((data[(data.length)-1].volumefrom)+(data[(data.length)-1].volumeto));
 
     d3.select("#openprice").text(openprice);
     d3.select("#closeprice").text(closeprice);
@@ -108,12 +113,12 @@ d3.json("/bitcoin_daily_data").then(data=>{
 
 //----------------------------------plotly Model prediction---------------------------
 // d3.json("Crypto_past_year_Predictions.json").then(data => {
-d3.json("Model.json").then(data => {
+d3.json("/model_predictions_BTC").then(data => {
     // console.log(data);
 ///////////---trace for Predictions for past date---//////
    let trace3 = {
-     x:data.map(row => row.dates),
-     y: data.map(row => row.predictions),
+     x:data.dates,
+     y: data.predictions,
         name: "Predictions",
         mode: 'lines',
         line: {
@@ -121,10 +126,11 @@ d3.json("Model.json").then(data => {
         width: 3
          }
     }
+
 ///////////---trace for real data for past date---//////
     let trace4 = {
-      x:data.map(row => row.dates),
-      y: data.map(row => row.real_prices),
+      x:data.dates,
+      y: data.real_prices,
       name: "Realdata",
       mode: 'lines',
       line: {
@@ -134,16 +140,16 @@ d3.json("Model.json").then(data => {
   }
 
 ///////////---trace for Predictions for future date---//////
-    let trace5 = {
-      x:data.map(row => row.Datetime),
-      y: data.map(row => row.predictions),
-      name: "Future ",
-      mode: 'lines',
-      line: {
-      color: 'orange',
-      width: 3
-     }
-    }
+    // let trace5 = {
+    //   x:data.map(row => row.Datetime),
+    //   y: data.map(row => row.predictions),
+    //   name: "Future ",
+    //   mode: 'lines',
+    //   line: {
+    //   color: 'orange',
+    //   width: 3
+    //  }
+    // }
 
 
     let traceData3 = [trace3,trace4];

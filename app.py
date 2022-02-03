@@ -1,31 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@JacobTrevithick 
-Price-Prediction-Model-Org
-/
-Price-Prediction-Model-Group
-Public
-Code
-Issues
-Pull requests
-Projects
-Wiki
-Security
-Insights
-Settings
-Price-Prediction-Model-Group/app.py /
-@Annaolivia5
-Annaolivia5 updated plots in js
-Latest commit 3ca6012 19 hours ago
- History
- 1 contributor
-419 lines (295 sloc)  13.8 KB
-   
 from curses.ascii import CR
 from distutils.cygwinccompiler import CygwinCCompiler
 from config import api_key, pwd
@@ -440,15 +412,3 @@ def get_predictions_ETH():
 
 if __name__ == "__main__":
     app.run(debug=True)
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About

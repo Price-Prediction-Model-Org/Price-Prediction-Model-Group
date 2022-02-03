@@ -5,9 +5,10 @@ d3.json("/bitcoin_daily_data").then(btcdata=>{
 ////////--------ETH DATA---//////////////////////
 d3.json("/ETH_daily_data").then(ethdata=>{
     // console.log(ethdata);   
+    console.log((btcdata[(btcdata.length)-1].volumefrom)+(btcdata[(btcdata.length)-1].volumeto));
+    console.log(btcdata);
+    console.log(ethdata);
 
-console.log(btcdata);
-console.log(ethdata);
 
     //////////////////////////------MARQUEE----------//////////////////////////////
     
@@ -26,20 +27,26 @@ console.log(ethdata);
     d3.select("#redtext1").text(Bitcloseprice);
     d3.select("#whitetext2").text("  Ethereum :");
     d3.select("#redtext2").text(ETHcloseprice);
-//});
-//});
+
 ///////////////////////////----------------TABLE------------///////////////////////////////
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     });
+    var millionformatter=new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        notation: "compact",
+        compactDisplay: "short"
+    });
     /////DATA FOR BITCOIN////////////
     var assetname="Bitcoin";
     var closeprice=formatter.format(btcdata[(btcdata.length)-1].close);
-    var volume=formatter.format(btcdata[(btcdata.length)-1].volumefrom);
+    var volume=millionformatter.format((btcdata[(btcdata.length)-1].volumefrom)+(btcdata[(btcdata.length)-1].volumeto));
     var allhigh=formatter.format(Math.max(...btcdata.map(row => row.high)));///... spreads array
     var alllow=formatter.format(Math.min(...btcdata.map(row=>row.low)));
 
+    console.log(volume)
 
     d3.select("#assetname1").text(assetname);
     d3.select("#closeprice1").text(closeprice);
@@ -50,7 +57,7 @@ console.log(ethdata);
 
     var assetname="Ethereum";
     var closeprice=formatter.format(ethdata[(ethdata.length)-1].close);
-    var volume=formatter.format(ethdata[(ethdata.length)-1].volumefrom);
+    var volume=millionformatter.format((ethdata[(ethdata.length)-1].volumefrom)+(ethdata[(ethdata.length)-1].volumeto));
     var allhigh=formatter.format(Math.max(...ethdata.map(row => row.high)));///... spreads array
     var alllow=formatter.format(Math.min(...ethdata.map(row=>row.low)));
 
