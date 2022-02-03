@@ -5,7 +5,7 @@ d3.json("/bitcoin_daily_data").then(btcdata=>{
 ////////--------ETH DATA---//////////////////////
 d3.json("/ETH_daily_data").then(ethdata=>{
     // console.log(ethdata);   
-
+    console.log((btcdata[(btcdata.length)-1].volumefrom)+(btcdata[(btcdata.length)-1].volumeto));
     console.log(btcdata);
     console.log(ethdata);
 
