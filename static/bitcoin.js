@@ -126,7 +126,7 @@ d3.json("/model_predictions_BTC").then(data => {
         width: 3
          }
     }
-    
+
 ///////////---trace for real data for past date---//////
     let trace4 = {
       x:data.dates,
@@ -140,16 +140,16 @@ d3.json("/model_predictions_BTC").then(data => {
   }
 
 ///////////---trace for Predictions for future date---//////
-    let trace5 = {
-      x:data.map(row => row.Datetime),
-      y: data.map(row => row.predictions),
-      name: "Future ",
-      mode: 'lines',
-      line: {
-      color: 'orange',
-      width: 3
-     }
-    }
+    // let trace5 = {
+    //   x:data.map(row => row.Datetime),
+    //   y: data.map(row => row.predictions),
+    //   name: "Future ",
+    //   mode: 'lines',
+    //   line: {
+    //   color: 'orange',
+    //   width: 3
+    //  }
+    // }
 
 
     let traceData3 = [trace3,trace4];
