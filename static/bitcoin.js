@@ -126,6 +126,7 @@ d3.json("/model_predictions_BTC").then(data => {
         width: 3
          }
     }
+    
 ///////////---trace for real data for past date---//////
     let trace4 = {
       x:data.dates,
