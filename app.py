@@ -1,13 +1,10 @@
 from curses.ascii import CR
 from distutils.cygwinccompiler import CygwinCCompiler
-from config import api_key, pwd
-from sqlalchemy import extract
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func, inspect
-from flask import Flask, json, jsonify, render_template, request
+from config import api_key
+from sqlalchemy import create_engine
+from flask import Flask, jsonify, render_template
 import pandas as pd
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine
 import requests
 import numpy as np
 import time
@@ -18,7 +15,6 @@ import datetime
 import tensorflow as tf
 import pickle
 from sklearn.preprocessing import MinMaxScaler
-
 
 
 #################################################
@@ -40,8 +36,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Connects to the database using the app config
 db = SQLAlchemy(app)
 
-# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-
+# Comment out for local testing with postgres
 # engine = create_engine(f"postgresql://postgres:{pwd}@localhost:5432/Crypto_db")
 # reflect an existing database into a new model
 # Base = automap_base()
@@ -287,13 +282,9 @@ def render_comparison():
 @app.route("/first_five")
 def firstfive():
 
-    # session = Session(engine)
     res = db.session.query(CryptoCurr.coin, CryptoCurr.time, CryptoCurr.close).\
         order_by(CryptoCurr.time).\
         limit(5).all()
-    # res = db.session.query(CryptoCurr.time, CryptoCurr.close).\
-    #     limit(5).all()
-    # session.close()
 
     # Convert list of tuples to dict
     dict = {}
