@@ -14,7 +14,7 @@ from models import create_classes
 import datetime
 import tensorflow as tf
 import pickle
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 #################################################
@@ -459,7 +459,7 @@ def get_predictions_BTC_acc():
     model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/TM_8_daily_acc_BTC_SEEPIC_trainUpTo2021.h5', compile = False)
 
     scaler = pickle.load(open('Model_Testing/Crypto_Models/Scalers/scaler_acc_8.pkl', 'rb'))
-    assert isinstance(scaler, MinMaxScaler)
+    assert isinstance(scaler, StandardScaler)
     scaler.clip = False  # add this line
     
     coin = 'BTC'
