@@ -226,9 +226,7 @@ def predict_past_year_acc(db, db_table, coin, model, scaler, look_back):
         'pred_acc': [float(x) for x in list(predicted_stock_acc)]
     }
     
-    past_year_json = jsonify(past_year_dict)
-    
-    return past_year_json
+    return past_year_dict
 #################################################
 # Flask Routes
 #################################################
