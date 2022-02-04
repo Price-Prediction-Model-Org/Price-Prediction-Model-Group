@@ -221,8 +221,8 @@ def predict_past_year_acc(db, db_table, coin, model, scaler, look_back):
     predicted_stock_acc = scaler.inverse_transform(predicted_stock_acc_extended)[:,4]
 
     past_year_dict = {
-        'dates': dates[50+look_back:],
-        'real_acc': features_df['close_acc'].values[look_back:],
+        'dates': list(dates[50+look_back:]),
+        'real_acc': list(features_df['close_acc'].values[look_back:]),
         'pred_acc': [float(x) for x in list(predicted_stock_acc)]
     }
     
