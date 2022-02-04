@@ -114,7 +114,7 @@ d3.json("/bitcoin_daily_data").then(data=>{
 //----------------------------------plotly Model prediction---------------------------
 // d3.json("Crypto_past_year_Predictions.json").then(data => {
 d3.json("/model_predictions_BTC").then(data => {
-    // console.log(data);
+    console.log(data);
 ///////////---trace for Predictions for past date---//////
    let trace3 = {
      x:data.dates,
@@ -139,20 +139,7 @@ d3.json("/model_predictions_BTC").then(data => {
       }
   }
 
-///////////---trace for Predictions for future date---//////
-    // let trace5 = {
-    //   x:data.map(row => row.Datetime),
-    //   y: data.map(row => row.predictions),
-    //   name: "Future ",
-    //   mode: 'lines',
-    //   line: {
-    //   color: 'orange',
-    //   width: 3
-    //  }
-    // }
-
-
-    let traceData3 = [trace3,trace4];
+   let traceData3 = [trace3,trace4];
 
     var layout1 = {
       dragmode: 'zoom',
@@ -202,6 +189,7 @@ d3.json("/model_predictions_BTC").then(data => {
 
  //----------------------------------plotly Model-2 prediction for acceleration---------------------------
 d3.json("/model_predictions_acc_BTC").then(btcdata => {
+    console.log(btcdata)
     let trace5 = {
         x:btcdata.dates,
         y: btcdata.pred_acc,
