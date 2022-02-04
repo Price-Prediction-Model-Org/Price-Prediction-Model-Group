@@ -155,6 +155,80 @@ def predict_X_days(db, db_table, coin, model, predict_days, scaler):
     
     return forecast_dict
 
+
+def predict_past_year_acc(db, db_table, coin, model, scaler, look_back):
+    """Function to make predictions for the past year in one day increments
+
+    Args:
+        session (object): connection to sql db
+        coin (string): [coin that is going to be predicted]
+        model ([loaded LSTM model]): [trained  model loaded in from directory]
+
+    Returns:
+        past_year_dict [dict]: [dictionary containing dates, predictions, real prices]
+    """
+    
+
+    one_year_ago = datetime.date.today() - datetime.timedelta(days=(365 + look_back))
+    
+    results = db.session.query(db_table.timestamp_date, db_table.close).filter(db_table.coin == coin).filter(db_table.timestamp_date >= one_year_ago).order_by(db_table.timestamp_date).all()
+        
+    dates = [x[0] for x in results]
+    close_prices = [float(x[1]) for x in results]
+    
+    features_dict = {
+        'close': close_prices
+    }
+    
+    features_df = pd.DataFrame(features_dict)
+    # create 20 and 50 day moving average columns
+    features_df['ma_20_day'] = features_df['close'].rolling(20, min_periods=1).mean()
+    features_df['ma_50_day'] = features_df['close'].rolling(50, min_periods=1).mean()
+
+    # create close price velocity and accelaration columns
+    features_df['close_velo'] = features_df['close'].diff()
+    features_df['close_acc'] = features_df['close_velo'].diff()
+
+    features_df = features_df.iloc[50:, :]
+
+    num_features = 5
+    inputs = np.array(features_df.values).reshape(-1,num_features)
+
+    inputs_transformed = scaler.transform(inputs)
+
+    # print(features_df.values)
+    # print(inputs)
+    X_test = []
+
+    for i in range(look_back, inputs_transformed.shape[0]):
+        
+        X_test.append(inputs_transformed[i-look_back:i])
+
+    
+    X_test = np.array(X_test)
+    X_test = np.reshape(X_test, (X_test.shape[0], look_back, num_features))
+    
+    
+    predicted_stock_acc = model.predict(X_test)
+    
+    # Get something which has as many features as dataset
+    predicted_stock_acc_extended = np.zeros((len(predicted_stock_acc),5))
+
+    # Put the predictions there
+    predicted_stock_acc_extended[:,4] = predicted_stock_acc[:,0]
+
+    # # Inverse transform it and select the 4th column.
+    predicted_stock_acc = scaler.inverse_transform(predicted_stock_acc_extended)[:,4]
+
+    past_year_dict = {
+        'dates': dates[50+look_back:],
+        'real_acc': features_df['close_acc'].values[look_back:],
+        'pred_acc': [float(x) for x in list(predicted_stock_acc)]
+    }
+    
+    past_year_json = jsonify(past_year_dict)
+    
+    return past_year_json
 #################################################
 # Flask Routes
 #################################################
@@ -374,6 +448,23 @@ def get_predictions_BTC():
     coin = 'BTC'
     
     past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
+
+    BTC_model_preds_json = jsonify(past_year_dict)
+
+    return BTC_model_preds_json
+
+@app.route("/model_predictions_acc_BTC")
+def get_predictions_BTC():
+    
+    model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/TM_8_daily_acc_BTC_SEEPIC_trainUpTo2021.h5', compile = False)
+
+    scaler = pickle.load(open('Model_Testing/Crypto_Models/Scalers/scaler_acc_8.pkl', 'rb'))
+    assert isinstance(scaler, MinMaxScaler)
+    scaler.clip = False  # add this line
+    
+    coin = 'BTC'
+    
+    past_year_dict = predict_past_year_acc(db, CryptoCurr, coin, model_loaded, scaler, 30)
 
     BTC_model_preds_json = jsonify(past_year_dict)
 
