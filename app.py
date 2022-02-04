@@ -173,7 +173,7 @@ def predict_past_year_acc(db, db_table, coin, model, scaler, look_back):
     
     results = db.session.query(db_table.timestamp_date, db_table.close).filter(db_table.coin == coin).filter(db_table.timestamp_date >= one_year_ago).order_by(db_table.timestamp_date).all()
         
-    dates = [x[0] for x in results]
+    dates = [str(x[0]) for x in results]
     close_prices = [float(x[1]) for x in results]
     
     features_dict = {
