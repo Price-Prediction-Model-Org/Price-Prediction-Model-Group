@@ -454,7 +454,7 @@ def get_predictions_BTC():
     return BTC_model_preds_json
 
 @app.route("/model_predictions_acc_BTC")
-def get_predictions_BTC():
+def get_predictions_BTC_acc():
     
     model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/TM_8_daily_acc_BTC_SEEPIC_trainUpTo2021.h5', compile = False)
 
@@ -466,9 +466,9 @@ def get_predictions_BTC():
     
     past_year_dict = predict_past_year_acc(db, CryptoCurr, coin, model_loaded, scaler, 30)
 
-    BTC_model_preds_json = jsonify(past_year_dict)
+    BTC_model_preds_acc_json = jsonify(past_year_dict)
 
-    return BTC_model_preds_json
+    return BTC_model_preds_acc_json
 
 
 @app.route("/model_predictions_ETH")
