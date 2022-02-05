@@ -19,6 +19,7 @@ https://min-api.cryptocompare.com/documentation?key=Historical&cat=dataHistoday
 The pricing information includes: timestamp, high, low, open, volumefrom, volumeto, and close. We will most likely save all the data, but only use one of the pricing metrics to train the model.
 
 # ETL proccess
+The API data includes timestamp, high, low, open, volumefrom, volumeto, and close. in addition to these columns, we've created a coin, 
 
 # Data storage
 * We used Heroku Postgres to store data for our app.
