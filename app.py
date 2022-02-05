@@ -349,7 +349,6 @@ def render_ETH():
 def render_comparison():
     return render_template('comparison.html')
 
-
 #JUST TEST ROUTE
 @app.route("/first_five")
 def firstfive():
