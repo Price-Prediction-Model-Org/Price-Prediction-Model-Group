@@ -109,8 +109,6 @@ d3.json("/bitcoin_daily_data").then(data=>{
 });
  
 
-
-
 //----------------------------------plotly Model prediction---------------------------
 // d3.json("Crypto_past_year_Predictions.json").then(data => {
 d3.json("/model_predictions_BTC").then(data => {
