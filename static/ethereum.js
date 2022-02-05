@@ -107,8 +107,6 @@ d3.json("/ETH_daily_data").then(data=>{
 });
  
 
-
-
 //----------------------------------plotly Model prediction---------------------------
 // d3.json("Crypto_past_year_Predictions.json").then(data => {
 d3.json("Model.json").then(data => {
