@@ -33,7 +33,7 @@ Database updates up to once daily, when index page loads, based on 00:00 GMT tim
 # Visuals
 
 
-
+![Database Design](https://github.com/JacobTrevithick/Climate-Change-Visualizations/blob/main/Database/PostgresDBdiagram.png)
 
 
 
