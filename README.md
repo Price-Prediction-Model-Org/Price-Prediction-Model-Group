@@ -36,7 +36,7 @@ HTML/CSS/Plotly has been used to do the visualization and plots.
 Here are the final plots and Welcome page:
 
 **Welcome Page:**
-![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Marquee.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Marquee.png){:height="36px" width="36px"}
 
 **Bitcoin PricePerformance Plot and Table:**
 ![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Bitcoin%20Price%20Performance%20plot.png)
