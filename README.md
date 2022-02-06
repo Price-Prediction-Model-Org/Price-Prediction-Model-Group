@@ -29,11 +29,51 @@ Database updates up to once daily, when index page loads, based on 00:00 GMT tim
 * Data for both coins was stored in 1 table, due to limitations of a free Heroku Postgres database.
 
 # Long Short Term Memory (LSTM) Model
+  The Long Short Term Model (LSTM) has been used to do the price forecasting. LSTM is a slightly more sophisticated version of a Recurrent Neural Network (RNN) which incorporates long term memory. The model will be trained on historical price data and used to predict the next value in the series. (Time window for predictions, tbd)
 
-# Visuals
+# Visualization
+HTML/CSS/Plotly has been used to do the visualization and plots.
+Here are the final plots and Welcome page:
+
+**Welcome Page:**
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Marquee.png)
+
+**Bitcoin PricePerformance Plot and Table:**
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Bitcoin%20Price%20Performance%20plot.png)
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinTable.png)
+
+**Bitcoin Candlestick chart:**
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinCandlestickPlot.png)
+
+**Bitcoin Price Prediction Model:**
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinPricePredictionPlot.png)
+
+**Bitcoin Price Acceleration Plot:**
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinPriceAccelerationPlot.png)
 
 
-![Database Design](https://github.com/JacobTrevithick/Climate-Change-Visualizations/blob/main/Database/PostgresDBdiagram.png)
+**Ethereum Price Performance Plot and Table:**
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/EthereumPricePerformancePlot.png)
+
+
+**Ethereum Candlestick Plot:**
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Ethereum%20CandlestickPlot.png)
+
+**Bitcoin vs Ethereum Comparison Table and Plot:**
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinEthereumComparisonTable.png)
+!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinEthereumComparisonPlot.png)
+
+# Team Members:
+    Anna Weeks
+    Hima Vissa
+    Jacob Trevithick
+    Lekshmi Prabha
+
+
+
+
+
+
 
 
 
