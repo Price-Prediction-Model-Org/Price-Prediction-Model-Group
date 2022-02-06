@@ -39,29 +39,29 @@ Here are the final plots and Welcome page:
 ![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Marquee.png)
 
 **Bitcoin PricePerformance Plot and Table:**
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Bitcoin%20Price%20Performance%20plot.png)
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinTable.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Bitcoin%20Price%20Performance%20plot.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinTable.png)
 
 **Bitcoin Candlestick chart:**
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinCandlestickPlot.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinCandlestickPlot.png)
 
 **Bitcoin Price Prediction Model:**
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinPricePredictionPlot.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinPricePredictionPlot.png)
 
 **Bitcoin Price Acceleration Plot:**
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinPriceAccelerationPlot.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinPriceAccelerationPlot.png)
 
 
 **Ethereum Price Performance Plot and Table:**
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/EthereumPricePerformancePlot.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/EthereumPricePerformancePlot.png)
 
 
 **Ethereum Candlestick Plot:**
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Ethereum%20CandlestickPlot.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Ethereum%20CandlestickPlot.png)
 
 **Bitcoin vs Ethereum Comparison Table and Plot:**
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinEthereumComparisonTable.png)
-!(https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinEthereumComparisonPlot.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinEthereumComparisonTable.png)
+![](https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinEthereumComparisonPlot.png)
 
 # Team Members:
     Anna Weeks
