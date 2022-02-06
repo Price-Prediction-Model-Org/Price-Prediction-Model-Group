@@ -44,12 +44,14 @@ Here are the final plots and Welcome page:
 <img src="https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/Bitcoin%20Price%20Performance%20plot.png" height="450" width="600" >
 <br>
 <img src="https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinTable.png" height="300" width="250" >
-
 <br>
+
+
 **Bitcoin Candlestick chart:**
 <br>
 <img src="https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinCandlestickPlot.png" height="450" width="600" >
 <br>
+
 **Bitcoin Price Prediction Model:**
 <br>
 <img src="https://github.com/Price-Prediction-Model-Org/Price-Prediction-Model-Group/blob/main/images/BitcoinPricePredictionPlot.png" height="450" width="600" >
@@ -77,10 +79,10 @@ Here are the final plots and Welcome page:
 
 # Team Members:
 
-   # Anna Weeks
-   # Hima Vissa
-   # Jacob Trevithick
-   # Lekshmi Prabha
+    Anna Weeks
+    Hima Vissa
+    Jacob Trevithick
+    Lekshmi Prabha
   
 
 
