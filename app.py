@@ -77,7 +77,6 @@ def predict_past_year(db, db_table, coin, model, scaler):
     inputs_transformed = scaler.transform(inputs)
 
     X_test = []
-    look_back = 60
 
     for i in range(look_back, len(inputs_transformed)):
         
