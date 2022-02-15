@@ -48,6 +48,9 @@ db = SQLAlchemy(app)
 CryptoCurr = create_classes(db)
 engine = create_engine(DATABASE_URL, echo = False)
 
+#################################################
+# Helper Functions for model predictions
+#################################################
 
 def predict_past_year(db, db_table, coin, model, scaler):
     """Function to make predictions for the past year in one day increments for a given coin and model
@@ -311,6 +314,8 @@ def index():
             r = requests.get(url)
             data = r.json()
             price_df = pd.DataFrame(data['Data']['Data'])
+            # drop today's data since it is not accurate (partial data: i.e. volume is only current to time of call)
+            price_df = price_df.loc[price_df['time'] != price_df['time'].max()]
 
             # cleaning df
             price_daily_clean_df = price_df[['time','high','low','open','volumefrom','volumeto','close']].copy()
