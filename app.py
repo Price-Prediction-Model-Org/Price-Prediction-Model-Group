@@ -306,10 +306,10 @@ def index():
         
         price_daily_clean_df = pd.DataFrame()
         # api call to get more data
-        if days > 0:
+        if days > 1:
 
             # API call
-            url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym={coin}&tsym=USD&limit={days}&toTs=-1&api_key={api_key}"
+            url = f"https://min-api.cryptocompare.com/data/v2/histoday?fsym={coin}&tsym=USD&limit={days-1}&toTs=-1&api_key={api_key}"
             r = requests.get(url)
             data = r.json()
             price_df = pd.DataFrame(data['Data']['Data'])
