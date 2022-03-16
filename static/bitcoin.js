@@ -108,7 +108,7 @@ d3.json("/bitcoin_daily_data").then(data=>{
   
     Plotly.newPlot('plotPrice', tracedata2,layout1);
 });
- 
+
 
 //----------------------------------plotly Model prediction---------------------------
 // d3.json("Crypto_past_year_Predictions.json").then(data => {

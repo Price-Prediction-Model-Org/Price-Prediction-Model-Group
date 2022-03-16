@@ -488,8 +488,24 @@ def get_predictions_ETH():
     ETH_model_preds_json = jsonify(past_year_dict)
 
     return ETH_model_preds_json
-    pass
+
+
+@app.route("/model_predictions_acc_ETH")
+def get_predictions_BTC_acc():
     
+    model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/TM_16_MODEL2_ETH_SEEPIC_trainUpToLastYear.h5', compile = False)
+
+    scaler = pickle.load(open('Model_Testing/Crypto_Models/Scalers/scaler_TM16_ETH_MODEL2.pkl', 'rb'))
+    assert isinstance(scaler, StandardScaler)
+    scaler.clip = False  # add this line
+    
+    coin = 'ETH'
+    
+    past_year_dict = predict_past_year_acc(db, CryptoCurr, coin, model_loaded, scaler, 30)
+
+    ETH_model_preds_acc_json = jsonify(past_year_dict)
+
+    return ETH_model_preds_acc_json   
 
 
 
