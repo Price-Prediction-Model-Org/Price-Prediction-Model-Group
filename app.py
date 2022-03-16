@@ -80,7 +80,7 @@ def predict_past_year(db, db_table, coin, model, scaler):
 
     for i in range(look_back, len(inputs_transformed)):
         
-        X_test.append(inputs_transformed[i-60:i, 0])
+        X_test.append(inputs_transformed[i-look_back:i, 0])
 
     X_test = np.array(X_test)
     X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
@@ -91,8 +91,8 @@ def predict_past_year(db, db_table, coin, model, scaler):
     
     
     past_year_dict = {
-        'dates': dates[60:],
-        'real_prices': close_prices[60:],
+        'dates': dates[look_back:],
+        'real_prices': close_prices[look_back:],
         'predictions': [float(x) for x in list(predicted_stock_price[:,0])]
     }
     
@@ -475,19 +475,19 @@ def get_predictions_BTC_acc():
 
 @app.route("/model_predictions_ETH")
 def get_predictions_ETH():
-    # model_loaded = tf.keras.models.load_model('<Insert ETH model here>', compile = False)
+    model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/TM_14_MODEL1_ETH_4L_50N_0p1D_100epo_trainUptoLastYear.h5', compile = False)
 
-    # scaler = pickle.load(open('scaler.pkl', 'rb'))
-    # assert isinstance(scaler, MinMaxScaler)
-    # scaler.clip = False  # add this line
+    scaler = pickle.load(open('Model_Testing/Crypto_Models/Scalers/scaler_TM_14.pkl', 'rb'))
+    assert isinstance(scaler, MinMaxScaler)
+    scaler.clip = False  # add this line
     
-    # coin = 'ETH'
+    coin = 'ETH'
     
-    # past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
+    past_year_dict = predict_past_year(db, CryptoCurr, coin, model_loaded, scaler)
 
-    # BTC_model_preds_json = jsonify(past_year_dict)
+    ETH_model_preds_json = jsonify(past_year_dict)
 
-    # return BTC_model_preds_json
+    return ETH_model_preds_json
     pass
     
 
