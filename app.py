@@ -434,6 +434,7 @@ def get_ETH_daily():
 def get_comp_page_data():
     pass
 
+
 #################################################
 # Model Routes to get model prediction data
 #################################################
