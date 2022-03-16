@@ -13,6 +13,7 @@ d3.json("/bitcoin_daily_data").then(data=>{
         notation: "compact",
         compactDisplay: "short"
     });
+
     ///////////////////////////----------------TABLE------------///////////////////////////////
 
     var openprice=formatter.format(data[(data.length)-1].open);
@@ -176,7 +177,7 @@ d3.json("/model_predictions_BTC").then(data => {
        
   };
    
-  //         // Render the plot to the div tag with id "plotplotmodelprediction"
+    // Render the plot to the div tag with id "plotplotmodelprediction"
      Plotly.newPlot("plotmodelprediction", traceData3, layout1);
 
 

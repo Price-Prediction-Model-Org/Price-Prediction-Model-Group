@@ -1,7 +1,7 @@
 d3.json("/ETH_daily_data").then(data=>{
     console.log(data);
 
-    ///////////////////////////----------------TABLE------------///////////////////////////////
+
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -12,6 +12,8 @@ d3.json("/ETH_daily_data").then(data=>{
         notation: "compact",
         compactDisplay: "short"
     });
+
+    ///////////////////////////----------------TABLE------------///////////////////////////////
 
     var openprice=formatter.format(data[(data.length)-1].open);
     var closeprice=formatter.format(data[(data.length)-1].close);
@@ -109,12 +111,12 @@ d3.json("/ETH_daily_data").then(data=>{
 
 //----------------------------------plotly Model prediction---------------------------
 // d3.json("Crypto_past_year_Predictions.json").then(data => {
-d3.json("Model.json").then(data => {
-    // console.log(data);
+d3.json("/model_predictions_ETH").then(data => {
+    console.log(data);
 ///////////---trace for Predictions for past date---//////
    let trace3 = {
-     x:data.map(row => row.dates),
-     y: data.map(row => row.predictions),
+     x:data.dates,
+     y: data.predictions,
         name: "Predictions",
         mode: 'lines',
         line: {
@@ -124,8 +126,8 @@ d3.json("Model.json").then(data => {
     }
 ///////////---trace for real data for past date---//////
     let trace4 = {
-      x:data.map(row => row.dates),
-      y: data.map(row => row.real_prices),
+      x:data.dates,
+      y: data.real_prices,
       name: "Realdata",
       mode: 'lines',
       line: {
@@ -135,16 +137,16 @@ d3.json("Model.json").then(data => {
   }
 
 ///////////---trace for Predictions for future date---//////
-    let trace5 = {
-      x:data.map(row => row.Datetime),
-      y: data.map(row => row.predictions),
-      name: "Future ",
-      mode: 'lines',
-      line: {
-      color: 'orange',
-      width: 3
-     }
-    }
+    // let trace5 = {
+    //   x:data.map(row => row.Datetime),
+    //   y: data.map(row => row.predictions),
+    //   name: "Future ",
+    //   mode: 'lines',
+    //   line: {
+    //   color: 'orange',
+    //   width: 3
+    //  }
+    // }
 
 
     let traceData3 = [trace3,trace4];
@@ -186,8 +188,8 @@ d3.json("Model.json").then(data => {
        
   };
    
-  //         // Render the plot to the div tag with id "plotplotmodelprediction"
-    //  Plotly.newPlot("plotmodelprediction", traceData3, layout1);
+    // Render the plot to the div tag with id "plotplotmodelprediction"
+    Plotly.newPlot("plotmodelprediction", traceData3, layout1);
 
 
  });
