@@ -193,3 +193,66 @@ d3.json("/model_predictions_ETH").then(data => {
 
 
  });
+
+ //----------------------------------plotly Model-2 prediction for acceleration---------------------------
+d3.json("/model_predictions_acc_ETH").then(ETHdata => {
+    console.log(ETHdata)
+    let trace5 = {
+        x:ETHdata.dates,
+        y: ETHdata.pred_acc,
+        name: "Predictions ",
+        type: 'bar',
+        marker: {
+            color: 'blue',
+            opacity: 0.7,
+        }
+    };
+    let trace6 = {
+        x:ETHdata.dates,
+        y: ETHdata.real_acc,
+        name: "real ",
+        type: 'bar',
+        marker: {
+            color: 'red',
+            opacity: 0.7,
+          }
+    };
+    var tracedata5 = [trace5, trace6];
+
+    var layout1 = {
+        barmode: 'stack',
+        dragmode: 'zoom',
+        showlegend: true,
+        plot_bgcolor:"black",
+        paper_bgcolor:"black",
+        xaxis: {
+            autorange: true,
+            title: 'Date',
+            rangeselector: {
+                x: 0,
+                y: 1.2,
+                xanchor: 'left',
+                font: {size:10},
+                bgcolor: '#054323',
+                buttons: [{
+                    step: 'month',
+                    stepmode: 'backward',
+                    count: 1,
+                    label: '1 month',
+                }, {
+                    step: 'month',
+                    stepmode: 'backward',
+                    count: 6,
+                    label: '6 months'
+                }, {
+                    step: 'all',
+                    label: 'All dates'
+                }]
+            }
+        },
+        yaxis: {
+            autorange: true
+        }
+    };
+    Plotly.newPlot('plotmodelprediction2', tracedata5, layout1);
+ });
