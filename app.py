@@ -491,7 +491,7 @@ def get_predictions_ETH():
 
 
 @app.route("/model_predictions_acc_ETH")
-def get_predictions_BTC_acc():
+def get_predictions_ETH_acc():
     
     model_loaded = tf.keras.models.load_model('Model_Testing/Crypto_Models/TM_16_MODEL2_ETH_SEEPIC_trainUpToLastYear.h5', compile = False)
 
