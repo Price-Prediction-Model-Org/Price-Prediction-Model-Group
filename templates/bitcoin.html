@@ -196,12 +196,14 @@
                         <hr>
                         
                         <div id="plotmodelprediction"></div>
-                        <p style="padding-left: 50px; padding-right: 400px;"> 
-                        The Daily Price Prediction Model is an LSTM Recurrent Neural Network model that predicts the next day BTC closing price. It takes the last 60 days of closing prices, feeds that into the LSTM model as a time-series input, and then predicts the next day's closing price.</p>
+                        <p style="padding-left: 50px; padding-right: 400px;color:whitesmoke"> 
+                        The Daily Price Prediction Model is an LSTM Recurrent Neural Network model that predicts the next day BTC closing price. It takes the last 60 days of closing prices, feeds that into the LSTM model as a time-series input, and then predicts the next day's closing price. The above plot shows the true BTC closing price (blue) compared to the model predictions (red)</p>
                         <p style="padding-left: 50px; padding-right: 400px;"> </p>
                         <h2 id="head-2"style="color:blue ;">Daily Price Acceleration Prediction Model</h2>
                         <br>
-                        <div id="plotmodelprediction2"></div>                    
+                        <div id="plotmodelprediction2"></div>
+                        <p style="padding-left: 50px; padding-right: 400px;color:whitesmoke"> 
+                        The Daily Price Acceleration Prediction Model is an LSTM Recurrent Neural Network model that predicts the next day BTC price acceleration. The price acceleration is defined as the second derivative of closing price with respect to time (first derivative of price velocity). The last 30 days of closing prices, 20-day moving averages, 50-day moving averages, closing price velocities, and closing price accelerations are fed  into the LSTM model as a time-series input, and then predicts the next day's closing price acceleration. The above plot shows the true price acceleration (red) compared to the model predictions (blue).</p>                    
                         <br>
                         <br>
                                             
