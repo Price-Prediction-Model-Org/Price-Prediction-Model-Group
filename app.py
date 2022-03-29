@@ -229,6 +229,7 @@ def predict_past_year_acc(db, db_table, coin, model, scaler, look_back):
     }
     
     return past_year_dict
+
 #################################################
 # Flask Routes
 #################################################
