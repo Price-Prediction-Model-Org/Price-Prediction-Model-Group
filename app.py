@@ -71,7 +71,7 @@ def predict_past_year(db, db_table, coin, model, scaler):
     
     dates = [str(x[0]) for x in results]
     close_prices = [float(x[1]) for x in results]
-
+    
     inputs = np.array(close_prices).reshape(-1,1)
 
     inputs_transformed = scaler.transform(inputs)
